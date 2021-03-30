@@ -13,11 +13,19 @@ router.get('',async (req, res) => {
 router.get('/testsubmodule',async (req, res) => {
     
     try {
-        res.render('gameHome')  
+        res.render('subModuleholder')  
     } catch (e) {
         console.log(e)
     }
     
 })
-
+router.get('/individualModule',async (req, res) => {
+    
+    try {
+        res.render('individualModuleHome')  
+    } catch (e) {
+        console.log(e)
+    }
+    
+})
 module.exports = router
