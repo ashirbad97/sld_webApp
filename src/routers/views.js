@@ -10,7 +10,7 @@ router.get('',async (req, res) => {
     }
     
 })
-router.get('/testsubmodule',async (req, res) => {
+router.get('/subModuleholder',async (req, res) => {
     
     try {
         res.render('subModuleholder')  
