@@ -2,7 +2,7 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 var synth = window.speechSynthesis;
-var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'black', 'blue', 'brown', 'chocolate', 'coral', 'crimson', 'cyan', 'fuchsia', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'indigo', 'ivory', 'khaki', 'lavender', 'lime', 'linen', 'magenta', 'maroon', 'moccasin', 'navy', 'olive', 'orange', 'orchid', 'peru', 'pink', 'plum', 'purple', 'red', 'salmon', 'sienna', 'silver', 'snow', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'white', 'yellow'];
+
 // var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
 
 var recognition = new SpeechRecognition();
@@ -14,26 +14,29 @@ recognition.lang = 'en-IN';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
-var diagnostic = document.querySelector('.output');
+// var diagnostic = document.querySelector('.output');
 var bg = document.querySelector('html');
 var hints = document.querySelector('.hints');
 var displayArea = document.querySelector('#display-area');
 var accuracyHolder = document.querySelector('#accuracy-holder');
+
 var listenBtn = document.querySelector('#listen-button');
 var speakBtn = document.querySelector('#speak-button');
 // var speakBtn = document.querySelector('button');
 
-speak = function() {
+speak = function(val) {
   recognition.start();
+  correctVal = val
   console.log('Ready to receive a speech command.');
 }
 
-listen = function(){
+listen = function(val){
+  
   if (synth.speaking) {
       console.error('speechSynthesis.speaking');
       return;
   }
-  var utterThis = new SpeechSynthesisUtterance("DOG");
+  var utterThis = new SpeechSynthesisUtterance(val);
   utterThis.onend = function (event) {
       console.log('SpeechSynthesisUtterance.onend');
   }
@@ -60,20 +63,15 @@ recognition.onresult = function(event) {
   // These also have getters so they can be accessed like arrays.
   // The second [0] returns the SpeechRecognitionAlternative at position 0.
   // We then return the transcript property of the SpeechRecognitionAlternative object
-  var color = event.results[0][0].transcript.toUpperCase();
-  diagnostic.textContent = 'Result received: ' + color + '.';
-  displayArea.textContent = color;
+  var result = event.results[0][0].transcript.toUpperCase();
+  // diagnostic.textContent = 'Result received: ' + color + '.';
+  // displayArea.textContent = color;
   confidenceValue = (event.results[0][0].confidence)*100
   accuracyHolder.textContent = (confidenceValue).toFixed(2) + '%';
   console.log('Confidence: ' + event.results[0][0].confidence);
-  console.log(color)
-  if(color=='DOG'){
-    console.log("showing succes alert")
-    $("#success-alert").modal()
-  }else{
-    $("#failure-alert").modal()
-  }
-  
+  console.log(result)
+  console.log(correctVal)
+  // compareRecognition(result)
 }
 
 recognition.onspeechend = function() {
@@ -88,5 +86,5 @@ recognition.onerror = function(event) {
   diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
 }
 
-listenBtn.addEventListener('click', listen);
-speakBtn.addEventListener('click',speak)
+// listenBtn.addEventListener('click', listen);
+// speakBtn.addEventListener('click',speak)
