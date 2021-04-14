@@ -96,5 +96,10 @@ compareRecognition = (result,correctVal)=>{
     console.log("Wrong Answer")
   }
 }
-// listenBtn.addEventListener('click', listen);
-// speakBtn.addEventListener('click',speak)
+
+myFunction = ()=>{
+  alert('Times Up')
+}
+window.onload = function(event) {
+  setTimeout(myFunction, 3000)
+}; 
