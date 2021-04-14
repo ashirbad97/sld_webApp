@@ -17,14 +17,17 @@ recognition.maxAlternatives = 1;
 // var diagnostic = document.querySelector('.output');
 var bg = document.querySelector('html');
 var hints = document.querySelector('.hints');
-var displayArea = document.querySelector('#display-area');
-var accuracyHolder = document.querySelector('#accuracy-holder');
 
-var listenBtn = document.querySelector('#listen-button');
-var speakBtn = document.querySelector('#speak-button');
+var displayArea = document.querySelector('#house-display-area');
+// var accuracyHolder = document.querySelector('#accuracy-holder');
+
+// var listenBtn = document.querySelector('#listen-button');
+// var speakBtn = document.querySelector('#speak-button');
 // var speakBtn = document.querySelector('button');
-
+let attempt = 0
 speak = function(val) {
+  attempt ++
+  console.log(attempt)
   recognition.start();
   correctVal = val
   console.log('Ready to receive a speech command.');
@@ -65,13 +68,13 @@ recognition.onresult = function(event) {
   // We then return the transcript property of the SpeechRecognitionAlternative object
   var result = event.results[0][0].transcript.toUpperCase();
   // diagnostic.textContent = 'Result received: ' + color + '.';
-  // displayArea.textContent = color;
+  displayArea.textContent = result;
   confidenceValue = (event.results[0][0].confidence)*100
-  accuracyHolder.textContent = (confidenceValue).toFixed(2) + '%';
+  // accuracyHolder.textContent = (confidenceValue).toFixed(2) + '%';
   console.log('Confidence: ' + event.results[0][0].confidence);
   console.log(result)
   console.log(correctVal)
-  // compareRecognition(result)
+  compareRecognition(result,correctVal)
 }
 
 recognition.onspeechend = function() {
@@ -86,5 +89,12 @@ recognition.onerror = function(event) {
   diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
 }
 
+compareRecognition = (result,correctVal)=>{
+  if(result == correctVal){
+    console.log("Correct Answer")
+  }else{
+    console.log("Wrong Answer")
+  }
+}
 // listenBtn.addEventListener('click', listen);
 // speakBtn.addEventListener('click',speak)
