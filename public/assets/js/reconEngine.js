@@ -3,8 +3,12 @@ var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 var synth = window.speechSynthesis;
 let currentDate = new Date();
-let time = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+currentDate.setMinutes(currentDate.getMinutes() + 5)
+let time = currentDate.getHours() + ":" + currentDate.getMinutes()
 console.log(time);
+
+
+
 // var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
 
 var recognition = new SpeechRecognition();
@@ -19,17 +23,16 @@ recognition.maxAlternatives = 1;
 // var diagnostic = document.querySelector('.output');
 var bg = document.querySelector('html');
 var hints = document.querySelector('.hints');
-
 var displayArea = document.querySelector('#house-display-area');
 // var accuracyHolder = document.querySelector('#accuracy-holder');
-
 // var listenBtn = document.querySelector('#listen-button');
 // var speakBtn = document.querySelector('#speak-button');
 // var speakBtn = document.querySelector('button');
-let attempt = 0
+var end_time = document.querySelector('#end_time')
+
+end_time.textContent = " "+time
+
 speak = function(val) {
-  attempt ++
-  console.log(attempt)
   recognition.start();
   correctVal = val
   console.log('Ready to receive a speech command.');
