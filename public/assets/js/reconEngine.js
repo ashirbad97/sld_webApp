@@ -103,7 +103,8 @@ compareRecognition = (result,correctVal)=>{
 }
 
 myFunction = ()=>{
-  alert('Times Up')
+  $('#myModal').modal('show')
+  console.log("Modal Triggered");
 }
 window.onload = function(event) {
   setTimeout(myFunction, 3000)
