@@ -102,10 +102,15 @@ compareRecognition = (result,correctVal)=>{
   }
 }
 
-myFunction = ()=>{
-  $('#myModal').modal('show')
+timesUpModal = ()=>{
+  $('#timesUpModal').modal('show')
   console.log("Modal Triggered");
 }
+mainModuleRedirection = ()=>{
+  window.location = "/";
+}
+
 window.onload = function(event) {
-  setTimeout(myFunction, 3000)
+  setTimeout(timesUpModal, 300000)
+  setTimeout(mainModuleRedirection,300500)
 }; 
