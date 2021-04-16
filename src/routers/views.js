@@ -10,10 +10,10 @@ router.get('',async (req, res) => {
     }
     
 })
-router.get('/subModuleholder',async (req, res) => {
+router.get('/subModuleHolder',async (req, res) => {
     
     try {
-        res.render('subModuleholder')  
+        res.render('subModuleHolder')  
     } catch (e) {
         console.log(e)
     }
