@@ -37,12 +37,13 @@ router.post('/addPatientFormData', async (req, res) => {
             ...req.body,
         })
         await patient.save()
-        res.status(200).send('Patient Added Successfully')
+        credentials = await Patient.findOne({patientId:req.body.patientId}).select('patientId password')
+        console.log(credentials)
+        res.status(200).send(credentials)
     }
     catch (error) {
         console.log(error)
     }
-
 })
 
 module.exports = router
