@@ -4,7 +4,7 @@ const hbs = require('hbs')
 const bodyParser = require('body-parser')
 const viewsRouter = require('./routers/views')
 const cookieParser = require('cookie-parser')
-// require ('./db/mongoose')
+require ('./db/mongoose')
 
 const app = express()
 const morgan = require('morgan')
