@@ -60,7 +60,7 @@ const patientSchema = new mongoose.Schema({
     }
 })
 patientSchema.pre('validate',async function(next) {
-    console.log('Creating Password')
+    // console.log('Creating Password')
     const patient = this
     const password = passGenerator.generate({
         length:6,
@@ -70,3 +70,6 @@ patientSchema.pre('validate',async function(next) {
     patient.password = password
     next()
 })
+
+const Patient = mongoose.model('Patient',patientSchema)
+module.exports = Patient
