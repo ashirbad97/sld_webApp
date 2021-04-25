@@ -59,7 +59,7 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="row">
         <div class="col-lg-4 col-md-4 ml-auto mr-auto">
           <div class="card card-login">
-            <form class="form" method="/login" action="">
+            <form class="form" method="POST" action="/login">
               <div class="card-header card-header-primary text-center">
                 <h4 class="card-title">Login</h4>
               </div>
@@ -71,7 +71,7 @@ The above copyright notice and this permission notice shall be included in all c
                       <i class="material-icons">face</i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Username...">
+                  <input type="text" class="form-control" placeholder="Username..." name="username">
                 </div>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -79,11 +79,11 @@ The above copyright notice and this permission notice shall be included in all c
                       <i class="material-icons">lock_outline</i>
                     </span>
                   </div>
-                  <input type="password" class="form-control" placeholder="Password...">
+                  <input type="password" class="form-control" placeholder="Password..." name="password">
                 </div>
               </div>
               <div class="footer text-center">
-                <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Login</a>
+                <button type="submit" class="btn btn-primary my-4" value="">Login</button>
               </div>
             </form>
           </div>
