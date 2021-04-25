@@ -1,8 +1,25 @@
 const express = require('express')
 const router = new express.Router()
 const Patient = require('../models/patients')
+const auth = require('../middleware/authentication')
 
-router.get('', async (req, res) => {
+router.post('/login', async (req, res) => {
+    try {
+        console.log(req.body)
+        // const doctor = await Patient.authenticateuser(req.body.email,req.body.password)
+        // const token = await doctor.generateAuthToken()
+        // if(!token){
+        //     throw error()
+        // }
+        // const doctorInfo = await getDoctorInfo(doctor._id)
+        // res.cookie('auth_token', token).render('index',{doctorInfo})
+    } catch (e) {
+        console.log(e)
+        // res.render('login',{e})
+    }
+})
+
+router.get('/',auth, async (req, res) => {
 
     try {
         res.render('gameHome')
@@ -11,6 +28,7 @@ router.get('', async (req, res) => {
     }
 
 })
+
 router.get('/subModuleHolder', async (req, res) => {
 
     try {
