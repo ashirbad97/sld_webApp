@@ -70,6 +70,18 @@ patientSchema.pre('validate',async function(next) {
     patient.password = password
     next()
 })
+patientSchema.statics.authenticateuser = async (username,password) => {
+    const patient = await Patient.findOne({ patientId:username })
+    if(!patient){
+        throw new Error('No such user found')
+    }
+
+    if(!(patient.password === password)){
+        throw new Error('Wrong Password')
+    }
+    //console.log(patient)
+    return patient
+}
 
 const Patient = mongoose.model('Patient',patientSchema)
 module.exports = Patient
