@@ -7,12 +7,13 @@ router.post('/login', async (req, res) => {
     try {
         res.status(200)
         const patient = await Patient.authenticateuser(req.body.username,req.body.password)
-        // const token = await patient.generateAuthToken()
-        // if(!token){
-        //     throw error()
-        // }
+        const token = await patient.generateAuthToken()
+        if(!token){
+            throw error()
+        }
         // const doctorInfo = await getDoctorInfo(doctor._id)
         // res.cookie('auth_token', token).render('index',{doctorInfo})
+        res.cookie('auth_token',token).render('gamehome')
     } catch (e) {
         console.log(e)
         // res.render('login',{e})

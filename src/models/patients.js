@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const passGenerator = require('generate-password')
+const jwt = require('jsonwebtoken')
 
 const patientSchema = new mongoose.Schema({
     patientId:{
@@ -79,9 +80,14 @@ patientSchema.statics.authenticateuser = async (username,password) => {
     if(!(patient.password === password)){
         throw new Error('Wrong Password')
     }
-    //console.log(patient)
     return patient
 }
-
+patientSchema.methods.generateAuthToken = async function () { 
+    const patient = this
+    const token = jwt.sign({ _id: patient._id.toString()},'thisissecretkey',{expiresIn:"20 hours"})
+    patient.tokens = patient.tokens.concat({ token })
+    await patient.save()
+    return token
+}
 const Patient = mongoose.model('Patient',patientSchema)
 module.exports = Patient
