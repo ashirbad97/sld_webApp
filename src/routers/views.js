@@ -1,26 +1,28 @@
 const express = require('express')
 const router = new express.Router()
 const Patient = require('../models/patients')
-// const auth = require('../middleware/authentication')
+const auth = require('../middleware/authentication')
 
 router.post('/login', async (req, res) => {
     try {
         res.status(200)
         const patient = await Patient.authenticateuser(req.body.username,req.body.password)
+        console.log(patient)
         const token = await patient.generateAuthToken()
-        if(!token){
-            throw error()
-        }
+        // if(!token){
+        //     throw error()
+        // }
+        // console.log("Hello"+patient)
         // const doctorInfo = await getDoctorInfo(doctor._id)
         // res.cookie('auth_token', token).render('index',{doctorInfo})
-        res.cookie('auth_token',token).render('gamehome')
+        // res.cookie('auth_token',token).render('gamehome')
     } catch (e) {
         console.log(e)
         // res.render('login',{e})
     }
 })
 
-router.get('/', async (req, res) => {
+router.get('/',auth, async (req, res) => {
 
     try {
         res.render('gameHome')
