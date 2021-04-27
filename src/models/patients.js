@@ -97,22 +97,22 @@ patientSchema.pre('validate', async function (next) {
         console.log(error)
     }
 })
-patientSchema.pre('validate', async function (next) {
-    try {
-        const patient = this
-        if(patient.currentLevel == null)
-        {
-            const levelOne = GameLevel.findLevelOne()
-            console.log(levelOne)
-        }
-        else{
-            console.log('Could Not assign a default value')
-        }
-        next()
-    } catch (error) {
-        console.log(error)
-    }
-})
+// patientSchema.pre('validate', async function (next) {
+//     try {
+//         const patient = this
+//         if(patient.currentLevel == null)
+//         {
+//             const levelOne = GameLevel.findLevelOne()
+//             console.log(levelOne)
+//         }
+//         else{
+//             console.log('Could Not assign a default value')
+//         }
+//         next()
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })
 patientSchema.statics.authenticateuser = async (username, password) => {
     const patient = await Patient.findOne({ patientId: username })
     if (!patient) {

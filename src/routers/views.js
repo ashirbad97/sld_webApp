@@ -2,7 +2,7 @@ const express = require('express')
 const router = new express.Router()
 const Patient = require('../models/patients')
 const auth = require('../middleware/authentication')
-
+const GameLevel = require('../models/gameLevel')
 
 
 router.get('/',auth, async (req, res) => {
@@ -41,8 +41,11 @@ router.get('/individualModule', async (req, res) => {
 router.post('/addPatientFormData', async (req, res) => {
     try {
         // console.log(req.body)
+        currentLevel = GameLevel.findLevelOne()
+        console.log('Level One is '+currentLevel)
         const patient = new Patient({
             ...req.body,
+            currentLevel
         })
         await patient.save()
         credentials = await Patient.findOne({patientId:req.body.patientId}).select('patientId password')
