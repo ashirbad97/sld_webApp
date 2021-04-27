@@ -5,10 +5,11 @@ const auth = async (req,res,next)=>{
     try{
         const token = req.cookies.auth_token
         const decoded = jwt.verify(token,'thisissecretkey')
-        const patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token})
+        var patient = await Patient.findPatientDetailsfromToken(decoded,token)
         if(!patient){
             throw new Error()
         }
+        patient = await patient.trimPatientData()
         req.patient = patient
         next()
     } catch (e) {
