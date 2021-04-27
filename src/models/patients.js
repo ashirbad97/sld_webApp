@@ -101,14 +101,7 @@ patientSchema.statics.authenticateuser = async (username, password) => {
     }
     return patient
 }
-patientSchema.methods.generateAuthToken = async function () {
-    const patient = this
-    const token = jwt.sign({ _id: patient._id.toString() }, 'thisissecretkey', { expiresIn: "20 hours" })
-    patient.tokens = patient.tokens.concat({ token })
-    await patient.save()
-    return token
-}
-patientSchema.statics.findPatientDetailsfromToken = async () => {
+patientSchema.statics.findPatientDetailsfromToken = async (decoded,token) => {
     try{
         const patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token })
         return patient
@@ -117,5 +110,29 @@ patientSchema.statics.findPatientDetailsfromToken = async () => {
         console.log(error)
     }
 }
+
+
+patientSchema.methods.generateAuthToken = async function () {
+    const patient = this
+    const token = jwt.sign({ _id: patient._id.toString() }, 'thisissecretkey', { expiresIn: "20 hours" })
+    patient.tokens = patient.tokens.concat({ token })
+    await patient.save()
+    return token
+}
+//Function to remove the additional fields while passing the patient data into the hbs 
+patientSchema.methods.trimPatientData = async function () {
+    var patient = this
+    patient = patient.toObject()
+    delete patient.tokens
+    delete patient.gender
+    delete patient.fmriFindings
+    delete patient.additionalData
+    delete patient.password
+    delete patient.scores
+    delete patient.schoolStandard
+    return patient
+}
+
+
 const Patient = mongoose.model('Patient', patientSchema)
 module.exports = Patient
