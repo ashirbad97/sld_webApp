@@ -66,6 +66,8 @@ const patientSchema = new mongoose.Schema({
         }
     }]
 })
+//This function runs before we do any save to this schema, the purpose of this pre hook is to ensure that each new patient created has a password generated 
+// themselves but had a bug if changing the password every time anu other save is made therefore added a condition to check if the password is already present
 patientSchema.pre('validate', async function (next) {
     try {
         const patient = this
@@ -106,6 +108,14 @@ patientSchema.methods.generateAuthToken = async function () {
     await patient.save()
     return token
 }
-
+patientSchema.statics.findPatientDetailsfromToken = async () => {
+    try{
+        const patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token })
+        return patient
+    }
+    catch(error){
+        console.log(error)
+    }
+}
 const Patient = mongoose.model('Patient', patientSchema)
 module.exports = Patient
