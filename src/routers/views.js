@@ -54,7 +54,7 @@ router.post('/addPatientFormData', async (req, res) => {
     }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         res.status(200)
         var patient = await Patient.authenticateuser(req.body.username,req.body.password)
