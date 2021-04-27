@@ -59,6 +59,11 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    currentLevel:{
+        type:Number,
+        required:true,
+        default:1
+    },
     tokens: [{
         token: {
             type: String,
