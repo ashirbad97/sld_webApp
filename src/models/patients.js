@@ -3,6 +3,8 @@ const validator = require('validator')
 const passGenerator = require('generate-password')
 const jwt = require('jsonwebtoken')
 
+const GameLevel = require('../models/gameLevel')
+
 const patientSchema = new mongoose.Schema({
     patientId: {
         type: String,
@@ -60,9 +62,10 @@ const patientSchema = new mongoose.Schema({
         required: true
     },
     currentLevel:{
-        type:Number,
+        type:mongoose.Schema.Types.ObjectId,
         required:true,
-        default:1
+        ref:'Patient',
+        default:null
     },
     tokens: [{
         token: {
@@ -93,7 +96,22 @@ patientSchema.pre('validate', async function (next) {
     } catch (error) {
         console.log(error)
     }
-
+})
+patientSchema.pre('save', async function (next) {
+    try {
+        const patient = this
+        if(patient.currentLevel == null)
+        {
+            const levelOne = GameLevel.findLevelOne()
+            console.log(levelOne)
+        }
+        else{
+            console.log('Could Not assign a default value')
+        }
+        next()
+    } catch (error) {
+        console.log(error)
+    }
 })
 patientSchema.statics.authenticateuser = async (username, password) => {
     const patient = await Patient.findOne({ patientId: username })

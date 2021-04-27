@@ -10,3 +10,11 @@ const gameLevelSchema = new mongoose.Schema({
         required:true
     }
 })
+
+gameLevelSchema.statics.findLevelOne = async()=>{
+    const levelOne = GameLevel.findOne({levelId:1})
+    return levelOne
+}
+
+const GameLevel = mongoose.model('GameLevel', gameLevelSchema)
+module.exports = GameLevel
