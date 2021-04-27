@@ -97,7 +97,7 @@ patientSchema.pre('validate', async function (next) {
         console.log(error)
     }
 })
-patientSchema.pre('save', async function (next) {
+patientSchema.pre('validate', async function (next) {
     try {
         const patient = this
         if(patient.currentLevel == null)
