@@ -12,7 +12,7 @@ const gameLevelSchema = new mongoose.Schema({
 })
 
 gameLevelSchema.statics.findLevelOne = async()=>{
-    const levelOne = GameLevel.findOne({levelId:1})
+    const levelOne = await GameLevel.findOne({levelId:1})
     return levelOne
 }
 

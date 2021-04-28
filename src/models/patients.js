@@ -81,7 +81,7 @@ patientSchema.pre('validate', async function (next) {
         const patient = this
         if(!patient.password)
         {
-            console.log('Creating Password')
+            // console.log('Creating Password')
             const password = passGenerator.generate({
                 length: 6,
                 numbers: false,
@@ -90,29 +90,14 @@ patientSchema.pre('validate', async function (next) {
             patient.password = password
         }
         else{
-            console.log("Password Already Exists")
+            // console.log("Password Already Exists")
         }
         next()
     } catch (error) {
         console.log(error)
     }
 })
-// patientSchema.pre('validate', async function (next) {
-//     try {
-//         const patient = this
-//         if(patient.currentLevel == null)
-//         {
-//             const levelOne = GameLevel.findLevelOne()
-//             console.log(levelOne)
-//         }
-//         else{
-//             console.log('Could Not assign a default value')
-//         }
-//         next()
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
+
 patientSchema.statics.authenticateuser = async (username, password) => {
     const patient = await Patient.findOne({ patientId: username })
     if (!patient) {

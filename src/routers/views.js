@@ -40,16 +40,17 @@ router.get('/individualModule', async (req, res) => {
 
 router.post('/addPatientFormData', async (req, res) => {
     try {
-        // console.log(req.body)
-        currentLevel = GameLevel.findLevelOne()
-        console.log('Level One is '+currentLevel)
+        // console.log(JSON.stringify(req.body))
+        currentLevel = await GameLevel.findLevelOne()
+        currentLevel = currentLevel._id
+
         const patient = new Patient({
             ...req.body,
             currentLevel
         })
         await patient.save()
         credentials = await Patient.findOne({patientId:req.body.patientId}).select('patientId password')
-        console.log(credentials)
+        // console.log(credentials)
         res.status(200).send(credentials)
     }
     catch (error) {
