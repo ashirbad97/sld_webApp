@@ -64,7 +64,7 @@ const patientSchema = new mongoose.Schema({
     currentLevel:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:'Patient',
+        ref:'GameLevel',
         default:null
     },
     tokens: [{
@@ -111,7 +111,8 @@ patientSchema.statics.authenticateuser = async (username, password) => {
 }
 patientSchema.statics.findPatientDetailsfromToken = async (decoded,token) => {
     try{
-        const patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token })
+        var patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token })
+        await patient.populate("currentLevel","levelId").execPopulate()
         return patient
     }
     catch(error){
