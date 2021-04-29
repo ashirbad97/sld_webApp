@@ -16,5 +16,16 @@ gameLevelSchema.statics.findLevelOne = async()=>{
     return levelOne
 }
 
+gameLevelSchema.virtual('subModules',{
+    ref:'SubModule',
+    localField:'_id',
+    foreignField:'mainModule'
+})
+
+gameLevelSchema.statics.listSubModuleName = async(moduleLevel)=>{
+    subModuleList = await GameLevel.findOne({'levelId':moduleLevel}).populate("subModules")
+    return subModuleList.subModules
+}
+
 const GameLevel = mongoose.model('GameLevel', gameLevelSchema)
 module.exports = GameLevel
