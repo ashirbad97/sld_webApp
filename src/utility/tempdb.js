@@ -2,6 +2,7 @@ const mongoose = require('../db/mongoose')
 const GameLevel = require('../models/gameLevel')
 const Patient = require('../models/patients')
 const SubModule = require('../models/subModules')
+const Word = require('../models/words')
 
 addGameLevel = async(i)=>{
     try {
@@ -55,3 +56,22 @@ entrySubModules = async () => {
         console.log(error)
     }
 }
+
+entryWords = async()=>{
+    try {
+        subModuleId = 'l1_1'
+        const subModule = await SubModule.findOne({subModuleId})
+        // wordList = ['City','House','Snake','Glass','Palace']
+        for(i=0;i<wordList.length;i++){
+            const word = new Word({
+                parentSubModule:subModule._id,
+                word:wordList[i]
+            })
+            await word.save()
+            console.log("Saved")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+// entryWords()
