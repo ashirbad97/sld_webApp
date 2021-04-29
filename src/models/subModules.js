@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const GameLevel = require('../models/gameLevel')
+
 
 const subModuleSchema = new mongoose.Schema({
     mainModule:{
@@ -16,6 +16,21 @@ const subModuleSchema = new mongoose.Schema({
         required:true
     }
 })
+
+subModuleSchema.virtual('words',{
+    ref:'Word',
+    localField:'_id',
+    foreignField:'parentSubModule'
+})
+
+subModuleSchema.statics.findWords = async(subModuleId)=>{
+    try {
+        const words = await SubModule.findOne({subModuleId}).populate("words")
+        return words.words
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const SubModule = mongoose.model('SubModule',subModuleSchema)
 module.exports = SubModule
