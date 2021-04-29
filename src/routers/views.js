@@ -3,6 +3,7 @@ const router = new express.Router()
 const Patient = require('../models/patients')
 const auth = require('../middleware/authentication')
 const GameLevel = require('../models/gameLevel')
+const SubModule = require('../models/subModules')
 
 
 router.get('/',auth, async (req, res) => {
@@ -36,6 +37,15 @@ router.get('/individualModule', async (req, res) => {
         console.log(e)
     }
 
+})
+
+router.get('/level?:id',async(req,res)=>{
+    try { 
+        subModulesList = await GameLevel.listSubModuleName(req.params.id)
+        res.render('subModuleHolder',{subModulesList})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 router.post('/addPatientFormData', async (req, res) => {
