@@ -39,10 +39,18 @@ router.get('/individualModule', async (req, res) => {
 
 })
 
-router.get('/level?:id',async(req,res)=>{
+router.get('/level/:level',async(req,res)=>{
     try { 
-        subModulesList = await GameLevel.listSubModuleName(req.params.id)
+        subModulesList = await GameLevel.listSubModuleName(req.params.level)
         res.render('subModuleHolder',{subModulesList})
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+router.get('/level/:level/submodule/:submodule',async(req,res)=>{
+    try { 
+        console.log(req.params.submodule)
     } catch (error) {
         console.log(error)
     }
