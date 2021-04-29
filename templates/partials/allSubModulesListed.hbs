@@ -3,7 +3,7 @@
         <ul class="nav nav-pills nav-pills-icons " role="tablist">
             {{#each subModulesList}}
             <li class="nav-item">
-                <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                <a class="nav-link" href="/level/{{../gameLevel}}/submodule/{{this.subModuleId}}" role="tab" data-toggle="tab"> {{!-- Adding a {{../}} refers the variable to parent template scope  --}}
                     <h1 style="font-size: 30px" "text-transform:uppercase" "font-family:'Courier New'">
                         /{{this.subModuleName}}/</h1> {{this.subModuleName}}
                 </a>
