@@ -4,7 +4,7 @@ const Patient = require('../models/patients')
 const auth = require('../middleware/authentication')
 const GameLevel = require('../models/gameLevel')
 const SubModule = require('../models/subModules')
-
+const Word = require('../models/words')
 
 router.get('/',auth, async (req, res) => {
     try {
@@ -29,10 +29,10 @@ router.get('/subModuleHolder', async (req, res) => {
     }
 
 })
-router.get('/individualModule', async (req, res) => {
+router.get('/wordsHolder', async (req, res) => {
 
     try {
-        res.render('individualModuleHome')
+        res.render('wordsHolder')
     } catch (e) {
         console.log(e)
     }
@@ -51,7 +51,8 @@ router.get('/level/:level',async(req,res)=>{
 
 router.get('/level/:level/submodule/:submodule',async(req,res)=>{
     try { 
-        console.log(req.params.submodule)
+        const wordList = await SubModule.findWords(req.params.submodule)
+        res.render('wordsHolder')
     } catch (error) {
         console.log(error)
     }
