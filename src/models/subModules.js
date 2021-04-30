@@ -31,6 +31,14 @@ subModuleSchema.statics.findWords = async(subModuleId)=>{
         console.log(error)
     }
 }
+subModuleSchema.statics.findsubModuleName = async(subModuleId)=>{
+    try {
+        const subModuleName = await SubModule.findOne({subModuleId}).select('subModuleName')
+        return subModuleName.subModuleName
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const SubModule = mongoose.model('SubModule',subModuleSchema)
 module.exports = SubModule
