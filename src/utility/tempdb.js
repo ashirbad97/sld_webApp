@@ -59,14 +59,23 @@ entrySubModules = async () => {
 
 entryWords = async()=>{
     try {
-        subModuleId = 'l1_1'
+        subModuleId = 'l1_9'
         const subModule = await SubModule.findOne({subModuleId})
         // wordList = ['City','House','Snake','Glass','Palace']
+        // wordList = ['Add','Apple','Snap','Fan','Animal']
+        // wordList = ['Ten','Teddy','Bat','Soft','Letter']
+        // wordList = ['Iron','Nice','Insect','Cyanide','Science']
+        // wordList = ['Pan','Puppet','Sheep','Lamp','Palace']
+        // wordList = ['Net','Knot','Engine','Bonnet','Night']
+        // wordList = ['Cat','Duck','Kit','Cheque','Chemist']
+        // wordList = ['Egg','Head','Said','Elephant','Bread']
+        wordList = ['Hat','Hill','Hello','Hippo','Happy']
         for(i=0;i<wordList.length;i++){
             const word = new Word({
                 parentSubModule:subModule._id,
                 word:wordList[i]
             })
+            console.log(wordList[i])
             await word.save()
             console.log("Saved")
         }
@@ -74,4 +83,4 @@ entryWords = async()=>{
         console.log(error)
     }
 }
-// entryWords()
+entryWords()
