@@ -8,7 +8,7 @@
         <div class="card-body">
             <h1 class="card-title">{{this.word}}</h1>
 
-            <span id="display-area" class="h2 font-weight-bold mb-0"><em></em></span>
+            <span id="display-area{{@index}}" class="h2 font-weight-bold mb-0"><em></em></span>
             {{!-- <div class="row align-items-center justify-content-center">
                 <div class="col-auto">
                     <span class="material-icons text-success mr-2">check</span>
@@ -23,7 +23,7 @@
                 <span id="accuracy-holder" class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
                 <span class="text-nowrap">Accuracy</span>
             </p> --}}
-            <button class="btn btn-icon btn-info" type="button" value="city" onclick="listen(this.value)">
+            <button class="btn btn-icon btn-info" type="button"  onclick="listen('{{this.word}}')">
                 <span class="material-icons">
                     play_arrow
                 </span>
