@@ -7,8 +7,6 @@ currentDate.setMinutes(currentDate.getMinutes() + 5)
 let time = currentDate.getHours() + ":" + currentDate.getMinutes()
 console.log(time);
 
-
-
 // var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
 
 var recognition = new SpeechRecognition();
@@ -51,14 +49,21 @@ listen = function(val){
   utterThis.onerror = function (event) {
       console.error('SpeechSynthesisUtterance.onerror');
   }
+  //Selection of language locale
   var voices = []
   voices = synth.getVoices()
-  // console.log(voices)
-  utterThis.voice = voices[9] //Hindi is voices[9]
+  voices.forEach((element,index) => {
+    if(element.lang == "hi-IN"){
+      localeId = index
+    }
+  });
+  utterThis.voice = voices[localeId]
+
   utterThis.pitch = 1;
   utterThis.rate = 1;
   console.log(utterThis)
   synth.speak(utterThis);
+  
 }
 
 
