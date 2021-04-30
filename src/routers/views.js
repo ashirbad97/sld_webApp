@@ -29,15 +29,6 @@ router.get('/subModuleHolder', async (req, res) => {
     }
 
 })
-router.get('/wordsHolder', async (req, res) => {
-
-    try {
-        res.render('wordsHolder')
-    } catch (e) {
-        console.log(e)
-    }
-
-})
 
 router.get('/level/:level',async(req,res)=>{
     try { 
@@ -52,7 +43,8 @@ router.get('/level/:level',async(req,res)=>{
 router.get('/level/:level/submodule/:submodule',async(req,res)=>{
     try { 
         const wordList = await SubModule.findWords(req.params.submodule)
-        res.render('wordsHolder')
+        const subModuleName = await SubModule.findsubModuleName(req.params.submodule)
+        res.render('wordsHolder',{wordList,subModuleName})
     } catch (error) {
         console.log(error)
     }
