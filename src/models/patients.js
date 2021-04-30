@@ -100,6 +100,7 @@ patientSchema.pre('validate', async function (next) {
 
 patientSchema.statics.authenticateuser = async (username, password) => {
     const patient = await Patient.findOne({ patientId: username })
+    await patient.populate("currentLevel","levelId").execPopulate()
     if (!patient) {
         throw new Error('No such user found')
     }
