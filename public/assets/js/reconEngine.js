@@ -5,7 +5,41 @@ var synth = window.speechSynthesis;
 let currentDate = new Date();
 currentDate.setMinutes(currentDate.getMinutes() + 5)
 let time = currentDate.getHours() + ":" + currentDate.getMinutes()
-console.log(time);
+console.log("Session Ends at : " + time);
+var SessionId = ""
+
+var sendScore = (score) => {
+  return fetch('/api/score', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, cors, *same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'same-origin', // include, *same-origin, omit
+    redirect: 'follow', // manual, *follow, error
+    referrer: 'no-referrer', // no-referrer, *client
+    body: JSON.stringify(score)
+    // body data type must match "Content-Type" header
+  }).then(response => response.json());
+}
+
+var generateSession = () => {
+  return fetch('/generateSession', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, cors, *same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    redirect: 'follow', // manual, *follow, error
+    referrer: 'no-referrer', // no-referrer, *client
+    // body data type must match "Content-Type" header
+  }).then(response => response.json());
+}
+
+generateSession().then((sessionId) => {
+  console.log('New Session ID is : ' + sessionId)
+  SessionId = sessionId
+})
 
 // var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
 
@@ -18,56 +52,61 @@ recognition.lang = 'en-IN';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
-// var diagnostic = document.querySelector('.output');
-var bg = document.querySelector('html');
-var hints = document.querySelector('.hints');
-var displayArea = document.querySelector('#house-display-area');
+var diagnostic = document.querySelector('.output');
+// var bg = document.querySelector('html');
+// var hints = document.querySelector('.hints');
+
 // var accuracyHolder = document.querySelector('#accuracy-holder');
 // var listenBtn = document.querySelector('#listen-button');
 // var speakBtn = document.querySelector('#speak-button');
 // var speakBtn = document.querySelector('button');
 var end_time = document.querySelector('#end_time')
 
-end_time.textContent = " "+time
+end_time.textContent = " " + time
 
-speak = function(val) {
+speak = function (val, wordId) {
+  wordTarget = '' + wordId
+  displayTarget = '#display-area-' + wordTarget
+  displayArea = document.querySelector(displayTarget);
   recognition.start();
-  correctVal = val
+  correctVal = val.toUpperCase()
   console.log('Ready to receive a speech command.');
 }
 
-listen = function(val){
-  
+listen = function (val, wordId) {
+  // console.log("ID is : "+wordId)
+  // console.log("Val is : "+val)
   if (synth.speaking) {
-      console.error('speechSynthesis.speaking');
-      return;
+    console.error('speechSynthesis.speaking');
+    return;
   }
   var utterThis = new SpeechSynthesisUtterance(val);
   utterThis.onend = function (event) {
-      console.log('SpeechSynthesisUtterance.onend');
+    console.log('SpeechSynthesisUtterance.onend');
   }
   utterThis.onerror = function (event) {
-      console.error('SpeechSynthesisUtterance.onerror');
+    console.error('SpeechSynthesisUtterance.onerror');
   }
   //Selection of language locale
   var voices = []
   voices = synth.getVoices()
-  voices.forEach((element,index) => {
-    if(element.lang == "hi-IN"){
+  voices.forEach((element, index) => {
+    if (element.lang == "hi-IN") {
       localeId = index
     }
   });
+  // console.log(localeId)
   utterThis.voice = voices[localeId]
 
   utterThis.pitch = 1;
   utterThis.rate = 1;
   console.log(utterThis)
   synth.speak(utterThis);
-  
+
 }
 
 
-recognition.onresult = function(event) {
+recognition.onresult = function (event) {
   // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
   // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
   // It has a getter so it can be accessed like an array
@@ -76,46 +115,104 @@ recognition.onresult = function(event) {
   // These also have getters so they can be accessed like arrays.
   // The second [0] returns the SpeechRecognitionAlternative at position 0.
   // We then return the transcript property of the SpeechRecognitionAlternative object
+
   var result = event.results[0][0].transcript.toUpperCase();
   // diagnostic.textContent = 'Result received: ' + color + '.';
   displayArea.textContent = result;
-  confidenceValue = (event.results[0][0].confidence)*100
+  // confidenceValue = (event.results[0][0].confidence)*100
   // accuracyHolder.textContent = (confidenceValue).toFixed(2) + '%';
+  console.log('Word ID is :'+wordTarget)
   console.log('Confidence: ' + event.results[0][0].confidence);
-  console.log(result)
-  console.log(correctVal)
-  compareRecognition(result,correctVal)
+  // console.log(result)
+  // console.log(correctVal)
+  comparisonResult = compareRecognition(result, correctVal)
+  changeBox(wordTarget, comparisonResult)
 }
 
-recognition.onspeechend = function() {
+recognition.onspeechend = function () {
   recognition.stop();
 }
 
-recognition.onnomatch = function(event) {
+recognition.onnomatch = function (event) {
   diagnostic.textContent = "Incorrect.";
 }
 
-recognition.onerror = function(event) {
+recognition.onerror = function (event) {
   diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
 }
 
-compareRecognition = (result,correctVal)=>{
-  if(result == correctVal){
+compareRecognition = (result, correctVal) => {
+  if (result == correctVal) {
     console.log("Correct Answer")
-  }else{
+    return true
+  } else {
     console.log("Wrong Answer")
+    return false
   }
 }
 
-timesUpModal = ()=>{
+changeBox = (wordTarget, comparisonResult) => {
+  attemptboxId = '#attemptbox-' + wordTarget
+  speakButtonId = '#speakButton-' + wordTarget
+  listenButtonId = '#listenButton-' + wordTarget
+
+  var attemptBox = document.querySelector(attemptboxId)
+  var listenButton = document.querySelector(listenButtonId)
+  var speakButton = document.querySelector(speakButtonId)
+
+  var attempts = attemptBox.getAttribute('value')
+  // If recognition is correct
+  if (comparisonResult == true) {
+
+    if (attemptBox.classList.contains("card-header-warning")) {
+      attemptBox.classList.remove("card-header-warning")
+    } else if (attemptBox.classList.contains("card-header-danger")) {
+      attemptBox.classList.remove("card-header-danger")
+    }
+    attemptBox.classList.add("card-header-success")
+    attemptBox.textContent = 'Correct'
+    console.log("Correct in " + attempts + " attempts")
+    listenButton.disabled = true
+    speakButton.disabled = true
+    currentTime = new Date()
+    score = new Object({
+      sessionId: SessionId,
+      wordId: wordTarget,
+      attempt: attempts,
+      responseTime: currentTime
+    })
+    sendScore(score).then((data) => {
+      console.log(data)
+    })
+
+  }
+  // If the recognition is wrong
+  else if (comparisonResult == false) {
+
+    newAttempt = parseInt(attempts) + 1
+    // console.log(attempts)
+    attemptBox.classList.remove("card-header-warning")
+    attemptBox.classList.add("card-header-danger")
+    if (attempts == 3) {
+      listenButton.disabled = true
+      speakButton.disabled = true
+    }
+    attemptBox.setAttribute("value", newAttempt)
+  }
+
+}
+
+timesUpModal = () => {
   $('#timesUpModal').modal('show')
   console.log("Modal Triggered");
 }
-mainModuleRedirection = ()=>{
+mainModuleRedirection = () => {
   window.location = "/";
 }
 
-window.onload = function(event) {
+window.onload = function (event) {
   setTimeout(timesUpModal, 300000)
-  setTimeout(mainModuleRedirection,300500)
-}; 
+  setTimeout(mainModuleRedirection, 300500)
+};
+
+

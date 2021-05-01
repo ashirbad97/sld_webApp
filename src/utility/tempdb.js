@@ -69,7 +69,8 @@ entryWords = async()=>{
         // wordList = ['Net','Knot','Engine','Bonnet','Night']
         // wordList = ['Cat','Duck','Kit','Cheque','Chemist']
         // wordList = ['Egg','Head','Said','Elephant','Bread']
-        wordList = ['Hat','Hill','Hello','Hippo','Happy']
+        // wordList = ['Hat','Hill','Hello','Hippo','Happy']
+        wordList
         for(i=0;i<wordList.length;i++){
             const word = new Word({
                 parentSubModule:subModule._id,
