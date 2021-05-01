@@ -77,7 +77,7 @@ router.post('/', async (req, res) => {
         if(!token){
             throw error()
         }
-        res.cookie('auth_token',token).render('gamehome',{patient})
+        res.cookie('auth_token',token).render('gameHome',{patient})
     } catch (e) {
         console.log(e)
         res.render('login',{e})

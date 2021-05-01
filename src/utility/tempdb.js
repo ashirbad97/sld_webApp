@@ -84,4 +84,4 @@ entryWords = async()=>{
         console.log(error)
     }
 }
-entryWords()
+// entryWords()
