@@ -4,9 +4,13 @@ const hbs = require('hbs')
 const bodyParser = require('body-parser')
 const viewsRouter = require('./routers/views')
 const cookieParser = require('cookie-parser')
+const https = require('https')
+const fs = require('fs')
+const helmet = require('helmet')
 require ('./db/mongoose')
 
 const app = express()
+app.use(helmet)
 const morgan = require('morgan')
 // app.use(morgan('combined'))
 app.use(bodyParser.json())
@@ -64,7 +68,13 @@ app.set('views',viewsPath)
 app.set('view engine','hbs')
 
 
+const options = {
+  cert: fs.readFileSync('sslcert/dyslx.ashirbad.me.cer'),
+  key: fs.readFileSync('sslcert/dyslx.ashirbad.me.key')
+};
+
 app.listen(80,()=>{
     console.log('Server Started on Port 80')
 })
 
+https.createServer(options, app).listen(8443);

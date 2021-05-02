@@ -56,10 +56,13 @@
     "express": "^4.17.1",
     "generate-password": "^1.6.0",
     "hbs": "^4.1.1",
+    "helmet": "^4.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.2",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
-    "validator": "^13.5.2"
+    "read-excel-file": "^5.1.0",
+    "validator": "^13.5.2",
+    "xlsx": "^0.16.9"
   }
 }
