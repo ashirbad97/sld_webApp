@@ -10,7 +10,7 @@ const helmet = require('helmet')
 require ('./db/mongoose')
 
 const app = express()
-app.use(helmet)
+// app.use(helmet())
 const morgan = require('morgan')
 // app.use(morgan('combined'))
 app.use(bodyParser.json())
@@ -20,6 +20,8 @@ const publicDirectoryPath = path.join(__dirname,'../public')
 app.use(express.static(publicDirectoryPath))
 const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
+const publicCertificatePath = path.join(__dirname,'sslcert/dyslx.ashirbad.me.cer')
+const privateCertificatePath = path.join(__dirname,'sslcert/dyslx.ashirbad.me.key')
 
 hbs.registerPartials(partialsPath)
 hbs.registerHelper('ifCond', function(v1, v2, options) {
@@ -67,14 +69,14 @@ app.use(function(req, res, next) {
 app.set('views',viewsPath)
 app.set('view engine','hbs')
 
-
+//  Path for SSL certificates
 const options = {
-  cert: fs.readFileSync('sslcert/dyslx.ashirbad.me.cer'),
-  key: fs.readFileSync('sslcert/dyslx.ashirbad.me.key')
+  cert: fs.readFileSync(publicCertificatePath),
+  key: fs.readFileSync(privateCertificatePath)
 };
 
-app.listen(80,()=>{
-    console.log('Server Started on Port 80')
-})
+app.listen(80)
 
-https.createServer(options, app).listen(8443);
+https.createServer(options, app).listen(443,()=>{
+  console.log("Secure Server has started running")
+});

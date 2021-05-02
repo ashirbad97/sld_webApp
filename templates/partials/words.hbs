@@ -25,6 +25,8 @@
                 <span class="text-nowrap">Accuracy</span>
             </p> --}}
             <button class="btn btn-icon btn-info" id="listenButton-{{this._id}}" type="button" value={{this._id}} onclick="listen('{{this.word}}',this.value)">
+                {{!-- <button class="btn btn-icon btn-info" id="listenButton-{{this._id}}" type="button" wordId={{this._id}} word={{this.word}}></button> --}}
+                {{!-- Alternative when inline is disabled --}}
                 <span class="material-icons">
                     play_arrow
                 </span>
@@ -32,6 +34,8 @@
                 <!-- Here the person has to Listen -->
             </button>
             <button class="btn btn-icon btn-info" id="speakButton-{{this._id}}" type="button" value={{this._id}} onclick="speak('{{this.word}}',this.value)">
+                {{!-- <button class="btn btn-icon btn-info" id="speakButton-{{this._id}}" type="button" wordId={{this._id}} word={{this.word}}></button> --}}
+                {{!-- Alternative when inline is disabled --}}
                 <span class="material-icons">
                     mic
                 </span>

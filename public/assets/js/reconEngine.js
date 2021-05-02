@@ -57,11 +57,28 @@ var diagnostic = document.querySelector('.output');
 // var hints = document.querySelector('.hints');
 
 // var accuracyHolder = document.querySelector('#accuracy-holder');
-// var listenBtn = document.querySelector('#listen-button');
-// var speakBtn = document.querySelector('#speak-button');
-// var speakBtn = document.querySelector('button');
-var end_time = document.querySelector('#end_time')
 
+// Was Disabled due to using helmet
+///////////////////////////////////////////////////////////////////////////////////////////////
+// When the page is being loaded it matches the quey elements
+// var listenBtn = document.querySelectorAll('[id^="listenButton-"]');
+// var speakBtn = document.querySelector('[id^="speakButton-"]');
+// Loops through all the elements and adds an event listner to them so they can be used during run-time
+// for(i=0;i<listenBtn.length;i++)
+// {
+//   listenBtn[i].addEventListener('click',function(){
+//     listen(this.getAttribute('word'),this.getAttribute('wordid'))
+//   })
+// }
+
+// for(i=0;i<speakBtn.length;i++)
+// {
+//   speakBtn[i].addEventListener('click',function(){
+//     listen(this.getAttribute('word'),this.getAttribute('wordid'))
+//   })
+// }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+var end_time = document.querySelector('#end_time')
 end_time.textContent = " " + time
 
 speak = function (val, wordId) {
@@ -74,8 +91,8 @@ speak = function (val, wordId) {
 }
 
 listen = function (val, wordId) {
-  // console.log("ID is : "+wordId)
-  // console.log("Val is : "+val)
+  console.log(val)
+  console.log(wordId)
   if (synth.speaking) {
     console.error('speechSynthesis.speaking');
     return;
@@ -140,6 +157,7 @@ recognition.onnomatch = function (event) {
 recognition.onerror = function (event) {
   diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
 }
+
 
 compareRecognition = (result, correctVal) => {
   if (result == correctVal) {
