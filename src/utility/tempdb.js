@@ -1,8 +1,10 @@
-const mongoose = require('../db/mongoose')
+// const mongoose = require('../db/mongoose')
 const GameLevel = require('../models/gameLevel')
 const Patient = require('../models/patients')
 const SubModule = require('../models/subModules')
 const Word = require('../models/words')
+// const xlsxFile = require('read-excel-file/node');
+const xlsx = require('xlsx')
 
 addGameLevel = async(i)=>{
     try {
@@ -85,3 +87,10 @@ entryWords = async()=>{
     }
 }
 // entryWords()
+
+const workbook = xlsx.readFile('Word_List.xlsx')
+console.log(workbook.SheetNames)
+worksheet = workbook.Sheets[workbook.SheetNames[0]]
+cell = 'Module1'
+
+console.log(worksheet[cell])
