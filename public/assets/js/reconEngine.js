@@ -91,8 +91,7 @@ speak = function (val, wordId) {
 }
 
 listen = function (val, wordId) {
-  console.log(val)
-  console.log(wordId)
+
   if (synth.speaking) {
     console.error('speechSynthesis.speaking');
     return;
@@ -104,17 +103,7 @@ listen = function (val, wordId) {
   utterThis.onerror = function (event) {
     console.error('SpeechSynthesisUtterance.onerror');
   }
-  //Selection of language locale
-  var voices = []
-  voices = synth.getVoices()
-  voices.forEach((element, index) => {
-    if (element.lang == "hi-IN") {
-      localeId = index
-    }
-  });
-  // console.log(localeId)
-  utterThis.voice = voices[localeId]
-
+  utterThis.lang = 'hi-IN'
   utterThis.pitch = 1;
   utterThis.rate = 1;
   console.log(utterThis)
@@ -232,5 +221,4 @@ window.onload = function (event) {
   setTimeout(timesUpModal, 300000)
   setTimeout(mainModuleRedirection, 300500)
 };
-
 
