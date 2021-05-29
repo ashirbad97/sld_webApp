@@ -5,6 +5,8 @@ const SubModule = require('../models/subModules')
 const Word = require('../models/words')
 // const xlsxFile = require('read-excel-file/node');
 const xlsx = require('xlsx')
+const fs = require('fs')
+const path = require('path')
 
 addGameLevel = async(i)=>{
     try {
@@ -88,9 +90,32 @@ entryWords = async()=>{
 }
 // entryWords()
 
-const workbook = xlsx.readFile('Word_List.xlsx')
-console.log(workbook.SheetNames)
-worksheet = workbook.Sheets[workbook.SheetNames[0]]
-cell = 'Module1'
+// const workbook = xlsx.readFile('Word_List.xlsx')
+// console.log(workbook.SheetNames)
+// worksheet = workbook.Sheets[workbook.SheetNames[0]]
+// cell = 'Module1'
 
-console.log(worksheet[cell])
+// console.log(worksheet[cell])
+
+/////////////////////////////////////////////////////////////////////////
+subModuleId = "l8"
+
+renameSubModuleFileName = (subModuleId)=>{
+    audioDir = "../../public/assets/audio"
+    audioPath = path.join(__dirname,audioDir)
+    subModulePath = path.join(audioPath,subModuleId)
+
+    fs.readdirSync(subModulePath).forEach(oldFileName=>{
+        newFileName = oldFileName.split("-")[1]+oldFileName.split("-")[2]
+        oldFilePath = path.join(subModulePath,oldFileName)
+        newFilePath = path.join(subModulePath,newFileName)
+
+        fs.rename(oldFilePath,newFilePath,()=>{
+            console.log("FileRenamed")
+        })
+    })
+
+}
+// renameSubModuleFileName(subModuleId)
+
+////////////////////////////////////////////////////////////////////////
