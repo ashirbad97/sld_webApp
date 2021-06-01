@@ -6,22 +6,26 @@ const viewsRouter = require('./routers/views')
 const cookieParser = require('cookie-parser')
 const https = require('https')
 const fs = require('fs')
-const helmet = require('helmet')
+// const helmet = require('helmet')
+// const morgan = require('morgan')
 require ('./db/mongoose')
 
 const app = express()
-// app.use(helmet())
-const morgan = require('morgan')
-// app.use(morgan('combined'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true}))
-app.use(cookieParser())
+
+// Defining Paths and Directories
 const publicDirectoryPath = path.join(__dirname,'../public')
-app.use(express.static(publicDirectoryPath))
 const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
 const publicCertificatePath = path.join(__dirname,'sslcert/dyslx.ashirbad.me.cer')
 const privateCertificatePath = path.join(__dirname,'sslcert/dyslx.ashirbad.me.key')
+
+//  Path for SSL certificates
+const options = {
+  cert: fs.readFileSync(publicCertificatePath),
+  key: fs.readFileSync(privateCertificatePath)
+};
+
+// Configuring hbs template engine
 
 hbs.registerPartials(partialsPath)
 hbs.registerHelper('ifCond', function(v1, v2, options) {
@@ -48,32 +52,34 @@ hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
       "%": lvalue % rvalue
   }[operator];
 });
+
+// Configuring Express
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true}))
+app.use(cookieParser())
+app.use(express.static(publicDirectoryPath))
+// app.use(helmet())
+// app.use(morgan('combined'))
+
+// Middleware function to setup CORS and Force HTTPS, * Has to be placed before assigning any routers else won't work
+app.use(function(req, res, next) {
+  
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// Assigning the 'Views' Router
 app.use(viewsRouter)
 
 // For any of the un-handled routes
 app.get('*',(req,res)=>{
   res.render('error')
 })
-
-//Setting up the CORS functionality in Express for Making AJAX calls
-app.use(function(req, res, next) {
-
-    res.header("Access-Control-Allow-Origin", "*");
-  
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  
-    next();
-  
-  });
-
+// Setting of templates directory
 app.set('views',viewsPath)
+// Assigning hbs configurations
 app.set('view engine','hbs')
-
-//  Path for SSL certificates
-const options = {
-  cert: fs.readFileSync(publicCertificatePath),
-  key: fs.readFileSync(privateCertificatePath)
-};
 
 app.listen(80)
 
