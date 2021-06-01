@@ -6,3 +6,14 @@ if(document.getElementById('allModulesListed')!=null){
         button.disabled = false 
     }
 }
+
+if(document.getElementById('loginPage')!=null){
+    var checkBrowser = ()=>{
+        if(window.navigator.vendor != "Google Inc."){
+            // Show a Modal
+            $('wrongBrowserModal').show()
+            console.log("Modal TRiggered")
+        }
+    }
+
+}

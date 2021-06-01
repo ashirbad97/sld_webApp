@@ -235,11 +235,17 @@ timesUpModal = () => {
   $('#timesUpModal').modal('show')
   console.log("Modal Triggered");
 }
+playTickSound = ()=>{
+  tickSound = '../../../assets/audio/others/timer-with-ding.mp3'
+  var tickSound = new Audio(tickSound)
+  tickSound.play()
+}
 mainModuleRedirection = () => {
   window.location = "/";
 }
 
 window.onload = function (event) {
+  setTimeout(playTickSound,277000) //277500
   setTimeout(timesUpModal, 300000)
   setTimeout(mainModuleRedirection, 300500)
 };
