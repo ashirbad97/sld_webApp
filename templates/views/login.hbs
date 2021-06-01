@@ -33,7 +33,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class="login-page sidebar-collapse">
+<body class="login-page sidebar-collapse" id="loginPage" onload="checkBrowser()">
   <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100"
     id="sectionsNav">
     <div class="container">
@@ -90,6 +90,31 @@ The above copyright notice and this permission notice shall be included in all c
         </div>
       </div>
     </div>
+
+    {{!-- Popup Modal --}}
+    <div class="modal fade" id="browserCheckModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Browser Compatibility Alert</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            We have detected that you are using a web browser other than Google Chrome. <br>
+            The speech recognition function in this application is currently only supported in Google Chrome browser as of now. <br>
+            You might consider viewing this in Google Chrome browser. <br>
+            If you continue with the current browser, this application might not work properly. <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">I Understood</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="footer">
       <div class="container">
         <nav class="float-left">
@@ -117,6 +142,7 @@ The above copyright notice and this permission notice shall be included in all c
     </footer>
   </div>
   <!--   Core JS Files   -->
+  <script src="../assets/js/all.js" type="text/javascript"></script>
   <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>

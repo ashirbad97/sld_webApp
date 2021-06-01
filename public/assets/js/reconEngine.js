@@ -49,7 +49,7 @@ var playsubModuleName = (subModuleId,subModuleName)=> {
   if (playPromise !== undefined) {
     playPromise.then(function() {
       // Automatic playback started!
-      console.log("Played Audio Successfulyy")
+      console.log("Played Audio Successfully")
     }).catch(function(error) {
       // Automatic playback failed.
       // Show a UI element to let the user manually start playback.
@@ -245,7 +245,7 @@ mainModuleRedirection = () => {
 }
 
 window.onload = function (event) {
-  setTimeout(playTickSound,277000) //277500
+  setTimeout(playTickSound,275000)
   setTimeout(timesUpModal, 300000)
   setTimeout(mainModuleRedirection, 300500)
 };

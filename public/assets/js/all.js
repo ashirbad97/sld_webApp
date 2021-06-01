@@ -8,11 +8,13 @@ if(document.getElementById('allModulesListed')!=null){
 }
 
 if(document.getElementById('loginPage')!=null){
+
     var checkBrowser = ()=>{
         if(window.navigator.vendor != "Google Inc."){
             // Show a Modal
-            $('wrongBrowserModal').show()
-            console.log("Modal TRiggered")
+            $('#browserCheckModal').modal('show')
+            console.log(window.navigator.vendor)
+            console.log("Modal Triggered")
         }
     }
 
