@@ -40,7 +40,7 @@ generateSession().then((sessionId) => {
   console.log('New Session ID is : ' + sessionId)
   SessionId = sessionId
 })
-
+// Function to 
 var playsubModuleName = (subModuleId,subModuleName)=> {
   audioFileName = '../../../assets/audio/'+subModuleId+'/'+subModuleName.toUpperCase()+'.m4a'
   var audio = new Audio(audioFileName)
@@ -180,6 +180,9 @@ changeBox = (wordTarget, comparisonResult) => {
   speakButtonId = '#speakButton-' + wordTarget
   listenButtonId = '#listenButton-' + wordTarget
 
+  correctSound = '../../../assets/audio/others/correct.wav'
+  incorrectSound = '../../../assets/audio/others/wrong.wav'
+
   var attemptBox = document.querySelector(attemptboxId)
   var listenButton = document.querySelector(listenButtonId)
   var speakButton = document.querySelector(speakButtonId)
@@ -187,7 +190,8 @@ changeBox = (wordTarget, comparisonResult) => {
   var attempts = attemptBox.getAttribute('value')
   // If recognition is correct
   if (comparisonResult == true) {
-
+    var audio = new Audio(correctSound)
+    audio.play()
     if (attemptBox.classList.contains("card-header-warning")) {
       attemptBox.classList.remove("card-header-warning")
     } else if (attemptBox.classList.contains("card-header-danger")) {
@@ -212,7 +216,8 @@ changeBox = (wordTarget, comparisonResult) => {
   }
   // If the recognition is wrong
   else if (comparisonResult == false) {
-
+    var audio = new Audio(incorrectSound)
+    audio.play()
     newAttempt = parseInt(attempts) + 1
     // console.log(attempts)
     attemptBox.classList.remove("card-header-warning")
