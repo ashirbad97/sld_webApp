@@ -63,10 +63,13 @@ app.use(express.static(publicDirectoryPath))
 
 // Middleware function to setup CORS and Force HTTPS, * Has to be placed before assigning any routers else won't work
 app.use(function(req, res, next) {
-  
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    // Forcing HTTPS, * This forces all the connection to go through HTTPS as a hard forcing 
+    if (!req.secure)
+      return res.redirect(301,"https://" + req.headers.host + req.url);
+    // Setup CORS Functionality
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 // Assigning the 'Views' Router
