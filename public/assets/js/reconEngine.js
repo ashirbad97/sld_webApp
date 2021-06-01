@@ -41,6 +41,23 @@ generateSession().then((sessionId) => {
   SessionId = sessionId
 })
 
+var playsubModuleName = (subModuleId,subModuleName)=> {
+  audioFileName = '../../../assets/audio/'+subModuleId+'/'+subModuleName.toUpperCase()+'.m4a'
+  var audio = new Audio(audioFileName)
+  audio.crossOrigin = 'anonymous';
+  var playPromise = audio.play()
+  if (playPromise !== undefined) {
+    playPromise.then(function() {
+      // Automatic playback started!
+      console.log("Played Audio Successfulyy")
+    }).catch(function(error) {
+      // Automatic playback failed.
+      // Show a UI element to let the user manually start playback.
+      console.log(error)
+    });
+  }
+}
+
 // var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;'
 
 var recognition = new SpeechRecognition();

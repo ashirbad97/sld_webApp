@@ -83,7 +83,7 @@ router.post('/', async (req, res) => {
         res.render('login',{e})
     }
 })
-
+// Move this to another router after more functions
 router.post('/api/score', async (req, res) => {
     try {
         await Score.saveScore(req.body)
