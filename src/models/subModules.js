@@ -14,6 +14,10 @@ const subModuleSchema = new mongoose.Schema({
     subModuleName:{
         type:String,
         required:true
+    },
+    extendedDetails:{
+        type:String,
+        trim:true
     }
 })
 
@@ -33,7 +37,7 @@ subModuleSchema.statics.findWords = async(subModuleId)=>{
 }
 subModuleSchema.statics.findsubModuleName = async(subModuleId)=>{
     try {
-        const subModuleName = await SubModule.findOne({subModuleId}).select('subModuleName subModuleId').lean()
+        const subModuleName = await SubModule.findOne({subModuleId}).select('subModuleName subModuleId extendedDetails').lean()
         subModuleName.subModuleId =  subModuleName.subModuleId.split("_",1)
         return subModuleName
     } catch (error) {

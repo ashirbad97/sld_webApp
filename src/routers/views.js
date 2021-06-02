@@ -25,7 +25,7 @@ router.get('/login',(req, res) => {
 router.get('/level/:level',auth,async(req,res)=>{
     try { 
         gameLevel = req.params.level
-        subModulesList = await GameLevel.listSubModuleName(req.params.level)
+        subModulesList = await GameLevel.listSubModuleName(gameLevel)
         res.render('subModuleHolder',{subModulesList,gameLevel})
     } catch (error) {
         console.log(error)
