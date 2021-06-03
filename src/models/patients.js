@@ -74,6 +74,17 @@ const patientSchema = new mongoose.Schema({
         }
     }]
 })
+
+patientSchema.virtual('noOfsessions',{
+    ref:'Session',
+    localField:'_id',
+    foreignField:'patientId',
+    count: true
+})
+// As virtual fields don't show up in the output by default they are to be specified to be used
+patientSchema.set('toObject', { virtuals: true });
+patientSchema.set('toJSON', { virtuals: true });
+
 //This function runs before we do any save to this schema, the purpose of this pre hook is to ensure that each new patient created has a password generated 
 // themselves but had a bug if changing the password every time anu other save is made therefore added a condition to check if the password is already present
 patientSchema.pre('validate', async function (next) {
@@ -99,7 +110,7 @@ patientSchema.pre('validate', async function (next) {
 })
 
 patientSchema.statics.authenticateuser = async (username, password) => {
-    const patient = await Patient.findOne({ patientId: username })
+    const patient = await Patient.findOne({ patientId: username }).populate("noOfsessions")
     await patient.populate("currentLevel","levelId").execPopulate()
     if (!patient) {
         throw new Error('No such user found')
@@ -112,7 +123,7 @@ patientSchema.statics.authenticateuser = async (username, password) => {
 }
 patientSchema.statics.findPatientDetailsfromToken = async (decoded,token) => {
     try{
-        var patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token })
+        var patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token }).populate("noOfsessions")
         await patient.populate("currentLevel","levelId").execPopulate()
         return patient
     }
@@ -140,9 +151,9 @@ patientSchema.methods.trimPatientData = async function () {
     delete patient.password
     delete patient.scores
     delete patient.schoolStandard
+    patient.totalDurationPlayed = patient.noOfsessions * 5
     return patient
 }
-
 
 const Patient = mongoose.model('Patient', patientSchema)
 module.exports = Patient
