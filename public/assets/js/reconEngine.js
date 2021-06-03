@@ -2,6 +2,8 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 var synth = window.speechSynthesis;
+voices = synth.getVoices();
+console.log("Supported Voices are : "+voices)
 let currentDate = new Date();
 currentDate.setMinutes(currentDate.getMinutes() + 5)
 let time = currentDate.getHours() + ":" + currentDate.getMinutes()

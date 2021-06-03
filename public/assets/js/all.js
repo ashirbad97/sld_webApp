@@ -19,3 +19,18 @@ if(document.getElementById('loginPage')!=null){
     }
 
 }
+
+if(document.getElementById('instructionModal')!=null){
+    console.log("In HomePage")
+    var popInstructions = ()=>{
+            $('#instructionModal').modal('show')
+            console.log("Modal Triggered")
+    }
+
+}
+
+if(document.getElementById('wordsHolderPage')!=null){
+    phoneme = document.querySelector('#subModuleIdHolder')
+    console.log(phoneme.innerHTML)
+    console.log(document.getElementById('subModuleIdHolderMini'))
+}

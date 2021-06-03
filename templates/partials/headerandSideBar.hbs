@@ -31,7 +31,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class="">
+<body class="homePage">
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
@@ -45,18 +45,19 @@ The above copyright notice and this permission notice shall be included in all c
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item active  ">
-            <a class="nav-link" href="./dashboard.html">
+            <a class="nav-link" href="/">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-          {{!-- <li class="nav-item ">
-            <a class="nav-link" href="./user.html">
-              <i class="material-icons">person</i>
-              <p>User Profile</p>
+          <li class="nav-item active">
+            <a class="nav-link" onclick="popInstructions()">
+              <i class="material-icons">pin_invoke</i>
+              <p>Instructions</p>
             </a>
           </li>
-          <li class="nav-item ">
+
+          {{!-- <li class="nav-item ">
             <a class="nav-link" href="./tables.html">
               <i class="material-icons">content_paste</i>
               <p>Table List</p>
@@ -73,8 +74,8 @@ The above copyright notice and this permission notice shall be included in all c
               <i class="material-icons">bubble_chart</i>
               <p>Icons</p>
             </a>
-          </li> --}}
-          {{!-- <li class="nav-item ">
+          </li>
+          <li class="nav-item ">
             <a class="nav-link" href="./map.html">
               <i class="material-icons">location_ons</i>
               <p>Maps</p>
