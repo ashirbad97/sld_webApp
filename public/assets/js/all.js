@@ -29,8 +29,3 @@ if(document.getElementById('instructionModal')!=null){
 
 }
 
-if(document.getElementById('wordsHolderPage')!=null){
-    phoneme = document.querySelector('#subModuleIdHolder')
-    console.log(phoneme.innerHTML)
-    console.log(document.getElementById('subModuleIdHolderMini'))
-}
