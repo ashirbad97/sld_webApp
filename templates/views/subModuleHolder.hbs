@@ -2,7 +2,9 @@
 
 <div class="content">
     <div class="container-fluid">
-        {{>headerStats}}
+        <div class="mb-5 row align-items-center justify-content-center">
+                <h2 style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">MODULE {{gameLevel}}</h2>
+        </div>
         {{>allSubModulesListed subModulesList=subModulesList gameLevel=gameLevel}}
     </div>
 </div>
