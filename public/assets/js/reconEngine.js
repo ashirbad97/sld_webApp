@@ -124,7 +124,7 @@ listen = function (val, wordId) {
   }
   utterThis.lang = 'hi-IN'
   utterThis.pitch = 1;
-  utterThis.rate = 1;
+  utterThis.rate = 0.1;
   console.log(utterThis)
   synth.speak(utterThis);
 
