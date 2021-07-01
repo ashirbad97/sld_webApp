@@ -108,7 +108,23 @@ patientSchema.pre('validate', async function (next) {
         console.log(error)
     }
 })
-
+patientSchema.statics.findAllPatientDetails = async()=>{
+    try{
+        var allData = await Patient.find().select("patientId name currentLevel scores.glad scores.ctopp2 scores.wrat5").sort({'_id': -1}).lean() // Did this as populate was not persisting Fix Later
+        
+        var allPatientData = await Patient.find().select("patientId name currentLevel scores.glad scores.ctopp2 scores.wrat5").sort({'_id': -1})
+        for(i=0;i<allPatientData.length;i++){
+            var patient = await allPatientData[i].populate("noOfsessions").execPopulate()
+            await patient.populate("currentLevel","levelId").execPopulate()
+            allData[i].noOfsessions =  patient.noOfsessions
+            allData[i].currentLevel = patient.currentLevel
+            allData[i].totalDurationPlayed = allData[i].noOfsessions * 5
+        }
+        return allData
+    }catch(error){
+        console.log(error)
+    }
+}
 patientSchema.statics.authenticateuser = async (username, password) => {
     const patient = await Patient.findOne({ patientId: username }).populate("noOfsessions")
     await patient.populate("currentLevel","levelId").execPopulate()
@@ -156,4 +172,4 @@ patientSchema.methods.trimPatientData = async function () {
 }
 
 const Patient = mongoose.model('Patient', patientSchema)
-module.exports = Patient
+module.exports = Patient  
