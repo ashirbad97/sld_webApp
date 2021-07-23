@@ -29,3 +29,17 @@ if(document.getElementById('instructionModal')!=null){
 
 }
 
+if(document.getElementById('wordsHolderPage')!=null){
+    counter = 0
+    listenCounter = (value)=>{
+        value.disabled = true
+        counter += 1
+        if (counter == 5){
+            speakButton = document.querySelectorAll(".speakButton")
+            speakButton.forEach(element => {
+                element.disabled = false
+            });
+        } 
+    }
+}
+

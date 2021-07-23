@@ -24,7 +24,7 @@
                 <span id="accuracy-holder" class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
                 <span class="text-nowrap">Accuracy</span>
             </p> --}}
-            <button class="btn btn-icon btn-info" id="listenButton-{{this._id}}" type="button" value={{this._id}} onclick="listen('{{this.word}}',this.value)">
+            <button class="btn btn-icon btn-info listenButton" id="listenButton-{{this._id}}" type="button" value={{this._id}} onclick="listen('{{this.word}}',this.value);listenCounter(this);">
                 {{!-- <button class="btn btn-icon btn-info" id="listenButton-{{this._id}}" type="button" wordId={{this._id}} word={{this.word}}></button> --}}
                 {{!-- Alternative when inline is disabled --}}
                 <span class="material-icons">
@@ -33,7 +33,7 @@
                 <span class="btn-inner--text">LISTEN</span>
                 <!-- Here the person has to Listen -->
             </button>
-            <button class="btn btn-icon btn-info" id="speakButton-{{this._id}}" type="button" value={{this._id}} onclick="speak('{{this.word}}',this.value)">
+            <button class="btn btn-icon btn-info speakButton" disabled id="speakButton-{{this._id}}" type="button" value={{this._id}} onclick="speak('{{this.word}}',this.value)">
                 {{!-- <button class="btn btn-icon btn-info" id="speakButton-{{this._id}}" type="button" wordId={{this._id}} word={{this.word}}></button> --}}
                 {{!-- Alternative when inline is disabled --}}
                 <span class="material-icons">
