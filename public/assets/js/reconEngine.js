@@ -110,24 +110,17 @@ speak = function (val, wordId) {
 }
 
 listen = function (val, wordId) {
-
-  if (synth.speaking) {
-    console.error('speechSynthesis.speaking');
-    return;
-  }
-  var utterThis = new SpeechSynthesisUtterance(val);
-  utterThis.onend = function (event) {
-    console.log('SpeechSynthesisUtterance.onend');
-  }
-  utterThis.onerror = function (event) {
-    console.error('SpeechSynthesisUtterance.onerror');
-  }
-  utterThis.lang = 'hi-IN'
-  utterThis.pitch = 1;
-  utterThis.rate = 0.1;
-  console.log(utterThis)
-  synth.speak(utterThis);
-
+  audioFileTargetPath = '../../../assets/audio/tts/' + val.toLowerCase() + '.mp3'
+  var playbackSpeed = parseFloat(0.5)
+  console.log('Audio Path is '+audioFileTargetPath)
+  console.log("Playback Speed is  ",playbackSpeed)
+  
+  audio = new Audio(audioFileTargetPath)
+  audio.playbackRate = playbackSpeed;
+  audio.play()
+  audio.onended = function() {
+    console.log("The audio has ended");
+}; 
 }
 
 
