@@ -84,8 +84,8 @@ app.set('views',viewsPath)
 // Assigning hbs configurations
 app.set('view engine','hbs')
 
-app.listen(80)
-
-https.createServer(options, app).listen(443,()=>{
-  console.log("Secure Server has started running")
-});
+// This is now the Webspeech API TTS Version and will not be used
+// If want to use please change port
+// https.createServer(options, app).listen(443,()=>{
+//   console.log("Secure Server has started running")
+// });
