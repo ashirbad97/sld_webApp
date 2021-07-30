@@ -174,6 +174,7 @@ changeBox = (wordTarget, comparisonResult) => {
   attemptboxId = '#attemptbox-' + wordTarget
   speakButtonId = '#speakButton-' + wordTarget
   listenButtonId = '#listenButton-' + wordTarget
+  noOfAttemptsLabelId = '#noOfAttempts-'+ wordTarget
 
   correctSound = '../../../assets/audio/others/correct.wav'
   incorrectSound = '../../../assets/audio/others/wrong.wav'
@@ -181,7 +182,7 @@ changeBox = (wordTarget, comparisonResult) => {
   var attemptBox = document.querySelector(attemptboxId)
   var listenButton = document.querySelector(listenButtonId)
   var speakButton = document.querySelector(speakButtonId)
-
+  var attemptLabel = document.querySelector(noOfAttemptsLabelId)
   var attempts = attemptBox.getAttribute('value')
   // If recognition is correct
   if (comparisonResult == true) {
@@ -222,6 +223,7 @@ changeBox = (wordTarget, comparisonResult) => {
       speakButton.disabled = true
     }
     attemptBox.setAttribute("value", newAttempt)
+    attemptLabel.innerHTML = newAttempt
   }
 
 }
