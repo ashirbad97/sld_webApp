@@ -105,7 +105,7 @@ speak = function (val, wordId) {
   displayTarget = '#display-area-' + wordTarget
   displayArea = document.querySelector(displayTarget);
   recognition.start();
-  correctVal = val.toUpperCase()
+  correctVal = val.toLowerCase()
   console.log('Ready to receive a speech command.');
 }
 
@@ -134,7 +134,7 @@ recognition.onresult = function (event) {
   // The second [0] returns the SpeechRecognitionAlternative at position 0.
   // We then return the transcript property of the SpeechRecognitionAlternative object
 
-  var result = event.results[0][0].transcript.toUpperCase();
+  var result = event.results[0][0].transcript.toLowerCase();
   // diagnostic.textContent = 'Result received: ' + color + '.';
   displayArea.textContent = result;
   // confidenceValue = (event.results[0][0].confidence)*100
