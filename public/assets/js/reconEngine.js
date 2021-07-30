@@ -184,6 +184,7 @@ changeBox = (wordTarget, comparisonResult) => {
   var speakButton = document.querySelector(speakButtonId)
   var attemptLabel = document.querySelector(noOfAttemptsLabelId)
   var attempts = attemptBox.getAttribute('value')
+  var maxAttempts = 3
   // If recognition is correct
   if (comparisonResult == true) {
     var audio = new Audio(correctSound)
@@ -215,10 +216,9 @@ changeBox = (wordTarget, comparisonResult) => {
     var audio = new Audio(incorrectSound)
     audio.play()
     newAttempt = parseInt(attempts) + 1
-    // console.log(attempts)
     attemptBox.classList.remove("card-header-warning")
     attemptBox.classList.add("card-header-danger")
-    if (attempts == 3) {
+    if (newAttempt == maxAttempts) {
       listenButton.disabled = true
       speakButton.disabled = true
     }
