@@ -16,15 +16,6 @@ const app = express()
 const publicDirectoryPath = path.join(__dirname,'../public')
 const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
-const publicCertificatePath = path.join(__dirname,'sslcert/dyslx.ashirbad.me.cer')
-const privateCertificatePath = path.join(__dirname,'sslcert/dyslx.ashirbad.me.key')
-
-//  Path for SSL certificates
-const options = {
-  cert: fs.readFileSync(publicCertificatePath),
-  key: fs.readFileSync(privateCertificatePath)
-};
-
 // Configuring hbs template engine
 
 hbs.registerPartials(partialsPath)
@@ -64,8 +55,8 @@ app.use(express.static(publicDirectoryPath))
 // Middleware function to setup CORS and Force HTTPS, * Has to be placed before assigning any routers else won't work
 app.use(function(req, res, next) {
     // Forcing HTTPS, * This forces all the connection to go through HTTPS as a hard forcing 
-    if (!req.secure)
-      return res.redirect(301,"https://" + req.headers.host + req.url);
+    // if (!req.secure)
+    //   return res.redirect(301,"https://" + req.headers.host + req.url);
     // Setup CORS Functionality
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -86,6 +77,6 @@ app.set('view engine','hbs')
 
 // This is now the Webspeech API TTS Version and will not be used
 // If want to use please change port
-https.createServer(options, app).listen(443,()=>{
-  console.log("Secure Server has started running")
+app.listen(8080,()=>{
+  console.log("Secure Server has started running on 8080")
 });
