@@ -1,12 +1,13 @@
 # sld_webApp
 
 ### Servers
-Development servers running on Hetzner(darkcloud and darkcloud2)
+Development servers running on Hetzner(darkcloud and darkcloud2)\
 Production servers on Baadal with domain readabled.com
 ### Domains
-Other testing domain include :
-sldapp.tk
-sldapp.ml
+Other testing domain include :\
+readabled.com [Master Branch]\
+sldapp.tk\
+sldapp.ml\
 dyslx.ashirbad.me (to be removed soon)
 ### Multiple Apps
 Most of the development servers have multiple NodeJs instances running at the same time. These run in the localhost.
@@ -20,3 +21,7 @@ Mail is setup to use Ashirbad Samantaray's cPanel email hosting by Namecheap.
 	In TXT record we add a value given by the cPanel hosting for verifying the domain.
 ### SSL
 For SSL, all requests are forced to https, and using Cloudflare SSL certificates are generated, these certificates are then used by our NGINX web-server.
+
+### App Versions Description
+readabled.com:\
+Runs on Baadal Server at localhost:8080
