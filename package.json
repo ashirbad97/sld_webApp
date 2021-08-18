@@ -1,6 +1,6 @@
 {
-  "name": "sldxrwebapp",
-  "version": "0.0.1",
+  "name": "sldwebapp",
+  "version": "0.0.2",
   "description": "",
   "main": "src/app.js",
   "dependencies": {
@@ -21,7 +21,8 @@
     "validator": "^13.6.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +33,5 @@
   "bugs": {
     "url": "https://github.com/ashirbad97/sldXRWebApp/issues"
   },
-  "homepage": "https://github.com/ashirbad97/sldXRWebApp#readme"
+  "homepage": "https://github.com/ashirbad97/sld_webApp/wiki/Steps-to-Install-in-localhost"
 }
