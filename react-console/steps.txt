@@ -1,0 +1,28 @@
+clone the repo : 'git clone https://github.com/ashirbad97/sld_webApp.git'
+
+create a new branch named reactUI : 'git checkout -b reactUI'
+
+enter in the main directory : 'cd sld_webApp'
+
+create a new React project with the name react-console : 'npx create-react-app react-console'
+
+enter react console : 'cd react-console'
+
+to launch the react app : 'npm start'
+
+if compiled successfully :
+You can now view react-console in the browser.
+  Local:            http://localhost:3000
+
+Now we install required npm packages :
+    1. material UI : npm install @material-ui/core
+    2. material icons : npm i @material-ui/icons
+Or just run 'npm install'
+
+Now create a folder named 'Components' inside 'src' where we will keep all our components.
+
+Now to view code for login component's design, go to : react-console/src/components/loginFrame.js
+
+This component is called in react-console/src/App.js file
+
+run 'npm start' on terminal and visit http://localhost:3000 
