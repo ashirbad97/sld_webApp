@@ -1,13 +1,16 @@
-import React from 'react'
+import React, {Component} from 'react'
 import './App.css';
-import LoginFrame from './components/loginFrame';
+/*import LoginFrame from './components/loginFrame';*/
+import MainModulePage from './components/mainModulesPage';
 
-function App() {
-  return (
-    <div className="App">
-      <LoginFrame/>
-    </div>
-  );
+class App extends Component {
+  render(){
+    return (
+      <div className="App">
+        <MainModulePage/>
+      </div>
+    );
+  }
 }
 
 export default App;
