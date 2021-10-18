@@ -31,13 +31,17 @@
                 <ul class="nav nav-pills nav-pills-icons " role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" href="" role="tab" data-toggle="tab">
+                            {{#if subModuleName.extendedDetails}}
+                            <h1 style="font-size: 42px" id="subModuleIdHolder"
+                                value={{subModuleName.subModuleId}} "font-family:'Courier New'"
+                                onclick="playsubModuleName('{{subModuleName.subModuleId}}','{{subModuleName.extendedDetails}}')">
+                                /{{subModuleName.subModuleName}}/</h1>                            
+                            <span id="subModuleIdHolderMini">{{subModuleName.extendedDetails}}</span>
+                            {{else}}
                             <h1 style="font-size: 42px" id="subModuleIdHolder"
                                 value={{subModuleName.subModuleId}} "font-family:'Courier New'"
                                 onclick="playsubModuleName('{{subModuleName.subModuleId}}','{{subModuleName.subModuleName}}')">
-                                /{{subModuleName.subModuleName}}/</h1>
-                            {{#if subModuleName.extendedDetails}}
-                            <span id="subModuleIdHolderMini">{{subModuleName.extendedDetails}}</span>
-                            {{else}}
+                                /{{subModuleName.subModuleName}}/</h1> 
                             <span id="subModuleIdHolderMini">{{subModuleName.subModuleName}}</span>
                             {{/if}}
                         </a>
