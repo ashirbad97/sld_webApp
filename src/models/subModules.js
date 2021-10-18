@@ -18,6 +18,9 @@ const subModuleSchema = new mongoose.Schema({
     extendedDetails:{
         type:String,
         trim:true
+    },
+    arrangementOrder:{
+        type:Number
     }
 })
 

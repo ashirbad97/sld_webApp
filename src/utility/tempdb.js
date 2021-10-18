@@ -3,8 +3,9 @@ const GameLevel = require('../models/gameLevel')
 const Patient = require('../models/patients')
 const SubModule = require('../models/subModules')
 const Word = require('../models/words')
+const {ObjectId} = require('mongodb');
 // const xlsxFile = require('read-excel-file/node');
-const xlsx = require('xlsx')
+// const xlsx = require('xlsx')
 const fs = require('fs')
 const path = require('path')
 
@@ -41,7 +42,7 @@ entrySubModules = async () => {
         // subModuleName = ['at','ab','ag','an','ad','ap','ay','as','am','ax','en','et','ed','eg','ea','ee','ib','ig','it','id','in','ip','ix','ox','od','on','ob','og','op','ub','ut','un','ug','us','up','ack','ass','ang','ame','ave','and','age','ake','ane','amp','ank','ent','ead','eed','ing','iss','ick','ive','ipe','ite','ink','ice','ide','ope','ose','ock','all','ill','ike','oke','uck']
         // subModuleName = ['1 Letter Words','2 Letter Words','3 Letter Words','4 Letter Words','5 Letter Words','5+ Letter Words']
         // subModuleName = ['pl','wh','tr','th','sw','st','sp','sn','sl','sh','pr','gr','fr','fl','dr','cr','ch','bl','ph','dis','im','in','mis','pre','re','un']
-        subModuleName = ['nk', 'lk', 'nt', 'mp', 'ft', 'lt', 'lf', 'ld', 'st', 'rst', 'ng', 'ck', 'able', 'ful', 'less', 'ly', 'ment', 'ness']
+        // subModuleName = ['nk', 'lk', 'nt', 'mp', 'ft', 'lt', 'lf', 'ld', 'st', 'rst', 'ng', 'ck', 'able', 'ful', 'less', 'ly', 'ment', 'ness']
         subModuleId = 8
         level = 'l8_'
         for (i = 0; i < subModuleName.length; i++) {
@@ -128,3 +129,32 @@ wordExtendedDetails = async () => {
 }
 // wordExtendedDetails()
 ////////////////////////////////////////////////////////////////////////
+
+listSubModules = async() =>{
+    try {
+        array = []
+        searchobjid = ObjectId('6088fe0c7b25a060c0ffcb04')
+        listsubmods = await SubModule.find({'mainModule':searchobjid})
+        listsubmods.forEach(subModule => {
+            array.push(subModule.subModuleName)
+            // console.log(typeof(subModule.subModuleName))
+        });
+        // console.log(array)
+        subModuleId = 4
+        level = 'l4_'
+        for (i = 0; i < array.length; i++) {
+            value = level + (i + 1)
+            const gameLevel = await GameLevel.findOne({ 'levelId': subModuleId })
+            const subModule = new SubModule({
+                mainModule: gameLevel._id,
+                subModuleId: value,
+                subModuleName: array[i]
+            })
+            console.log(subModule)
+            // await subModule.save()
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+// listSubModules()

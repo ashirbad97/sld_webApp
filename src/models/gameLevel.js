@@ -23,9 +23,10 @@ gameLevelSchema.virtual('subModules',{
 })
 
 gameLevelSchema.statics.listSubModuleName = async(moduleLevel)=>{
-    subModuleList = await GameLevel.findOne({'levelId':moduleLevel}).populate("subModules")
+    subModuleList = await GameLevel.findOne({'levelId':moduleLevel}).populate({path:"subModules"})
+    subModuleList.subModules.sort((a,b)=>{return a.arrangementOrder - b.arrangementOrder})
+    console.log(subModuleList.subModules)
     return subModuleList.subModules
 }
-
 const GameLevel = mongoose.model('GameLevel', gameLevelSchema)
 module.exports = GameLevel
