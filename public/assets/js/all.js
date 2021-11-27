@@ -30,11 +30,13 @@ if(document.getElementById('instructionModal')!=null){
 }
 
 if(document.getElementById('wordsHolderPage')!=null){
-    counter = 0
+    counter = 0 
+    wordCount = document.querySelectorAll(".card-body")
+    console.log("No of words in sub-module is ",wordCount.length)
     listenCounter = (value)=>{
         value.disabled = true
         counter += 1
-        if (counter == 5){
+        if (counter == wordCount.length){
             speakButton = document.querySelectorAll(".speakButton")
             speakButton.forEach(element => {
                 element.disabled = false
