@@ -81,6 +81,13 @@ patientSchema.virtual('noOfsessions',{
     foreignField:'patientId',
     count: true
 })
+
+patientSchema.virtual('sessions',{
+    ref:'Session',
+    localField:'_id',
+    foreignField:'patientId'
+})
+
 // As virtual fields don't show up in the output by default they are to be specified to be used
 patientSchema.set('toObject', { virtuals: true });
 patientSchema.set('toJSON', { virtuals: true });
