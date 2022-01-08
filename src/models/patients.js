@@ -61,11 +61,11 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    currentLevel:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'GameLevel',
-        default:null
+    currentLevel: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'GameLevel',
+        default: null
     },
     tokens: [{
         token: {
@@ -75,17 +75,17 @@ const patientSchema = new mongoose.Schema({
     }]
 })
 
-patientSchema.virtual('noOfsessions',{
-    ref:'Session',
-    localField:'_id',
-    foreignField:'patientId',
+patientSchema.virtual('noOfsessions', {
+    ref: 'Session',
+    localField: '_id',
+    foreignField: 'patientId',
     count: true
 })
 
-patientSchema.virtual('sessions',{
-    ref:'Session',
-    localField:'_id',
-    foreignField:'patientId'
+patientSchema.virtual('sessions', {
+    ref: 'Session',
+    localField: '_id',
+    foreignField: 'patientId'
 })
 
 // As virtual fields don't show up in the output by default they are to be specified to be used
@@ -97,8 +97,7 @@ patientSchema.set('toJSON', { virtuals: true });
 patientSchema.pre('validate', async function (next) {
     try {
         const patient = this
-        if(!patient.password)
-        {
+        if (!patient.password) {
             // console.log('Creating Password')
             const password = passGenerator.generate({
                 length: 6,
@@ -107,7 +106,7 @@ patientSchema.pre('validate', async function (next) {
             })
             patient.password = password
         }
-        else{
+        else {
             // console.log("Password Already Exists")
         }
         next()
@@ -115,26 +114,26 @@ patientSchema.pre('validate', async function (next) {
         console.log(error)
     }
 })
-patientSchema.statics.findAllPatientDetails = async()=>{
-    try{
-        var allData = await Patient.find().select("patientId name currentLevel scores.glad scores.ctopp2 scores.wrat5").sort({'_id': -1}).lean() // Did this as populate was not persisting Fix Later
-        
-        var allPatientData = await Patient.find().select("patientId name currentLevel scores.glad scores.ctopp2 scores.wrat5").sort({'_id': -1})
-        for(i=0;i<allPatientData.length;i++){
+patientSchema.statics.findAllPatientDetails = async () => {
+    try {
+        var allData = await Patient.find().select("patientId name currentLevel scores.glad scores.ctopp2 scores.wrat5").sort({ '_id': -1 }).lean() // Did this as populate was not persisting Fix Later
+
+        var allPatientData = await Patient.find().select("patientId name currentLevel scores.glad scores.ctopp2 scores.wrat5").sort({ '_id': -1 })
+        for (i = 0; i < allPatientData.length; i++) {
             var patient = await allPatientData[i].populate("noOfsessions").execPopulate()
-            await patient.populate("currentLevel","levelId").execPopulate()
-            allData[i].noOfsessions =  patient.noOfsessions
+            await patient.populate("currentLevel", "levelId").execPopulate()
+            allData[i].noOfsessions = patient.noOfsessions
             allData[i].currentLevel = patient.currentLevel
             allData[i].totalDurationPlayed = allData[i].noOfsessions * 5
         }
         return allData
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 }
 patientSchema.statics.authenticateuser = async (username, password) => {
     const patient = await Patient.findOne({ patientId: username }).populate("noOfsessions")
-    await patient.populate("currentLevel","levelId").execPopulate()
+    await patient.populate("currentLevel", "levelId").execPopulate()
     if (!patient) {
         throw new Error('No such user found')
     }
@@ -144,13 +143,13 @@ patientSchema.statics.authenticateuser = async (username, password) => {
     }
     return patient
 }
-patientSchema.statics.findPatientDetailsfromToken = async (decoded,token) => {
-    try{
-        var patient = await Patient.findOne({ _id: decoded._id,'tokens.token':token }).populate("noOfsessions")
-        await patient.populate("currentLevel","levelId").execPopulate()
+patientSchema.statics.findPatientDetailsfromToken = async (decoded, token) => {
+    try {
+        var patient = await Patient.findOne({ _id: decoded._id, 'tokens.token': token }).populate("noOfsessions")
+        await patient.populate("currentLevel", "levelId").execPopulate()
         return patient
     }
-    catch(error){
+    catch (error) {
         console.log(error)
     }
 }
